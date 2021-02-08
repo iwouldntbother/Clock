@@ -37,7 +37,7 @@ function setup() {
   let cnv = createCanvas(720, 300);
   cnv.parent("canvasContainer")
   angleMode(DEGREES);
-  background(0);
+  background(255);
   frameRate(2);
 }
 
@@ -47,6 +47,15 @@ function draw() {
   var mm = minute();
   var hh = hour();
   var ss = second();
+
+  var milli = d.getMilliseconds();
+  var p_milli = milli/1000 + .001;
+  var s = d.getSeconds() + p_milli;
+  var p_s = s/60 + .001;
+  var m = d.getMinutes() + p_s;
+  var p_m = m/60 + .001;
+  var h = d.getHours() + p_m;
+  var p_h = h%12/12 + .001;
 
 
   let h1 = Math.trunc(hh / 10);
