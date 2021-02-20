@@ -219,12 +219,12 @@ function draw() {
 
         push()
         translate(600, 0);
-        singleNumber(100, 100, s1, s1_p)
+        singleNumber(100, 100, s1 || 0, s1_p)
         pop()
 
         push()
         translate(720, 0);
-        singleNumber(100, 100, s2, s2_p)
+        singleNumber(100, 100, s2 || 0, s2_p)
         pop()
 
     pop()
