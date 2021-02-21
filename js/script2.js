@@ -1,6 +1,3 @@
-const hourPos = [7, 3, 9, 0, 0, 6, 3];
-const minutePos = [35, 30, 30, 45, 15, 0, 45];
-
 const handPos = [
     // 0
     [7, 35],
@@ -120,163 +117,117 @@ const handPositions = [
     ]
 ]
 
-var numArray = [
-    "zero()",
-    "one()",
-    "two()",
-    "three()",
-    "four()",
-    "five()",
-    "six()",
-    "seven()",
-    "eight()",
-    "nine()"
-];
 
-document.getElementById("canvasContainer").innerHTML += "<p id='console'></p>"
-var con = document.getElementById("console")
-
-con.style.position = "fixed"
-con.style.bottom = "0";
-con.innerHTML = "test"
+// document.getElementById("canvasContainer").innerHTML += "<p id='console'></p>"
+// var con = document.getElementById("console")
+// con.innerHTML = "test"
 
 var a = 0;
+var bg = 255;
+var fg = 0;
+var light = true;
 
 function setup() {
-    let cnv = createCanvas(720, 300);
+    let cnv = createCanvas(1305, 315);
     cnv.parent("canvasContainer")
     angleMode(DEGREES);
-    background(255);
+    background(bg);
     frameRate(24);
 }
 
 function draw() {
-    background(255);
+    // background(bg);
+    clear();
     d = new Date();
 
     var milli = d.getMilliseconds();
-    var p_milli = milli/1000 + .001;
+    var p_milli = milli/1000// + .001;
     var s = d.getSeconds() + p_milli;
-    var p_s = s/60 + .001;
+    var p_s = s/60// + .001;
     var m = d.getMinutes() + p_s;
-    var p_m = m/60 + .001;
+    var p_m = m/60// + .001;
     var h = d.getHours() + p_m;
     var p_h = h%12/12 + .001;
 
-    var s2 = Number(String(s)[1])
-    var s2_p = Number(String(p_milli))
+    var s2 = Number((String((("0"+s).split(".")[0]).slice(-2)))[1])
+    var s2_p = Number(p_milli)
     // 
-    var s1 = Number(String(s)[0])
+    var s1 = Number((String((("0"+s).split(".")[0]).slice(-2)))[0])
     var s1_p = (s2 + s2_p) / 10
     //
-    var m2 = Number(String(m)[1])
-    var m2_p = Number(String(p_s))
+    var m2 = Number((String((("0"+m).split(".")[0]).slice(-2)))[1])
+    var m2_p = Number(p_s)
     // 
-    var m1 = Number(String(m)[0])
+    var m1 = Number((String((("0"+m).split(".")[0]).slice(-2)))[0])
     var m1_p = (m2 + m2_p) / 10
     // 
-    var h2 = Number(String(h)[1])
-    var h2_p = Number(String(p_m))
+    var h2 = Number((String((("0"+h).split(".")[0]).slice(-2)))[1])
+    var h2_p = Number(p_m)
     // 
-    var h1 = Number(String(h)[0])
+    var h1 = Number((String((("0"+h).split(".")[0]).slice(-2)))[0])
     var h1_p =  (h2 + h2_p) / 10
 
-    con.innerHTML = s1 +" "+ s1_p +" | "+ s2 +" "+ s2_p
+    // con.innerHTML = ((h1_p > 1) ? console.log("h1") : h1_p) +"<br>"+ ((h2_p > 1) ? console.log("h2") : h2_p) +"<br>"+ ((m1_p > 1) ? console.log("m1") : m1_p) +"<br>"+ ((m2_p > 1) ? console.log("m2") : m2_p) +"<br>"+ ((s1_p > 1) ? console.log("s1") : s1_p) +"<br>"+ ((s2_p > 1) ? console.log("s2") : s2_p)
     
     push();
 
-        scale(0.8)
+        scale(1.5)
 
         push()
         translate(0, 0);
-        singleNumber(100, 100, h1, h1_p)
+        singleNumber(100, 100, h1, ((h1 == 1) ? 0 : (h1 + 1)), h1_p)
         pop()
 
         push()
         translate(120, 0);
-        singleNumber(100, 100, h2, h2_p)
+        singleNumber(100, 100, h2, (h2 + 1), h2_p)
         pop()
 
         push()
         translate(240, 0);
-        singleNumber(100, 100, 10, 0)
+        semiColon(100, 100)
         pop()
 
         push()
         translate(300, 0);
-        singleNumber(100, 100, m1, m1_p)
+        singleNumber(100, 100, m1, ((m1 == 5) ? 0 : (m1 + 1)), m1_p)
         pop()
 
         push()
         translate(420, 0);
-        singleNumber(100, 100, m2, m2_p)
+        singleNumber(100, 100, m2, (m2 + 1), m2_p)
         pop()
 
         push()
         translate(540, 0);
-        singleNumber(100, 100, 10, 0)
+        semiColon(100, 100)
         pop()
 
         push()
         translate(600, 0);
-        singleNumber(100, 100, s1 || 0, s1_p)
+        singleNumber(100, 100, s1, ((s1 == 5) ? 0 : (s1 + 1)), s1_p)
         pop()
 
         push()
         translate(720, 0);
-        singleNumber(100, 100, s2 || 0, s2_p)
+        singleNumber(100, 100, s2, (s2 + 1), s2_p)
         pop()
 
     pop()
   
 }
 
-function digitClock(h1, h2, m1, m2, s1, s2,size) {
-    push();
-    scale(size);
-    
-    push();
-    translate(0, 0);
-    eval(numArray[h1]);
-    pop();
-    
-    push();
-    translate(400, 0);
-    eval(numArray[h2]);
-    pop();
-    
-    push()
-    translate(800, 0);  
-    dotdot();
-    pop()
-    
-    push();
-    translate(1000, 0);
-    eval(numArray[m1]);
-    pop();
-    
-    push();
-    translate(1400, 0);
-    eval(numArray[m2]);
-    pop();
-    
-    pop();
-}
-
-function singleNumber(x, y, number, percent) {
-    // con.innerHTML = number + " . " + percent
+function singleNumber(x, y, number, targetNumber, percent) {
 
     var handvalues = eval(handPositions[number])
-    var targetHandValues = eval(handPositions[number++])
+    var targetHandValues = eval(handPositions[((targetNumber == 10) ? 0 : targetNumber)])
 
     push();
     
     scale(0.3);
     var i=0
     for (iy=0; iy < (handvalues.length / (handvalues.length / 6)); iy++) {
-        // console.log(iy)
         for (ix=0; ix < (handvalues.length / 6); ix++) {
-            // console.log(ix)
 
             var oM = map(handPos[handvalues[i]][1], 0, 60, 0, 359);
             var oH = map(handPos[handvalues[i]][0], 0, 12, 0, 359);
@@ -284,30 +235,28 @@ function singleNumber(x, y, number, percent) {
             var tM = map(handPos[targetHandValues[i]][1], 0, 60, 0, 359);
             var tH = map(handPos[targetHandValues[i]][0], 0, 12, 0, 359);
 
-            var dM = tM - oM
-            var dH = tH - oM
+            var dM = ((tM == oM) ? tM+360 : tM) - oM
+            var dH = ((tH == oH) ? tH+360 : tH) - oH
 
             var cM = oM + (dM * percent)
             var cH = oH + (dH * percent)
 
-            // console.log(cM, cH)
-
-            // console.log(handPos[handvalues[i]])
 
             push();
 
                 translate(x+(x*ix),y+(y*iy))
 
-                stroke(0);
+                stroke(fg);
                 strokeWeight(5);
-                fill(255);
+                fill(bg);
+                noFill();
                 ellipse(0, 0, 100, 100);  
 
                 push();
                     rotate(-90);
                     rotate(cM);
                     strokeWeight(10);
-                    stroke(0);
+                    stroke(fg);
                     line(0, 0, 100 / 2 - 10, 0);
                 pop();
 
@@ -315,7 +264,7 @@ function singleNumber(x, y, number, percent) {
                     rotate(-90);
                     rotate(cH);
                     strokeWeight(10);
-                    stroke(0);
+                    stroke(fg);
                     line(0, 0, 100 / 2 - 10, 0);
                 pop();
 
@@ -328,57 +277,67 @@ function singleNumber(x, y, number, percent) {
     
 }
 
-function handFunction(x, y, h, m) {
-    push();
-    translate(x, y);
-    //   console.log(h, m);
+function semiColon(x, y) {
 
-        // var secondsLeft = 60 - second()
-        // var framesLeft = secondsLeft * 30
-        // console.log(Math.floor(((60 - second()) * 30) / 0.018))
-
-    var m2 = map(m, 0, 60, 0, 359);
-    var h2 = map(h, 0, 12, 0, 359);
-
-    var ss = 100;
-    var f = 255;
-
-    stroke(0);
-    strokeWeight(5);
-    fill(f);
-    ellipse(0, 0, ss, ss);
+    var handvalues = eval(handPositions[10])
 
     push();
-    rotate(-90);
-    rotate(h2);
-    strokeWeight(10);
-    stroke(0);
-    line(0, 0, ss / 2 - 10, 0);
-    pop();
-
-    push();
-    rotate(-90);
-    rotate(m2);
-    strokeWeight(10);
-    stroke(0);
-    line(0, 0, ss / 2 - 10, 0);
-    pop();
-
-    pop();
-}
-
-function dotdot() {
-    handFunction(200, 200, hourPos[0], minutePos[0]);
-    handFunction(200, 300, hourPos[1], minutePos[1]);
-    handFunction(200, 400, hourPos[4], minutePos[4]);
-    handFunction(200, 500, hourPos[1], minutePos[1]);
-    handFunction(200, 600, hourPos[4], minutePos[4]);
-    handFunction(200, 700, hourPos[0], minutePos[0]);
     
-    handFunction(300, 200, hourPos[0], minutePos[0]);
-    handFunction(300, 300, hourPos[2], minutePos[2]);
-    handFunction(300, 400, hourPos[3], minutePos[3]);
-    handFunction(300, 500, hourPos[2], minutePos[2]);
-    handFunction(300, 600, hourPos[3], minutePos[3]);
-    handFunction(300, 700, hourPos[0], minutePos[0]);
+    scale(0.3);
+    var i=0
+    for (iy=0; iy < (handvalues.length / (handvalues.length / 6)); iy++) {
+        for (ix=0; ix < (handvalues.length / 6); ix++) {
+
+            var oM = map(handPos[handvalues[i]][1], 0, 60, 0, 359);
+            var oH = map(handPos[handvalues[i]][0], 0, 12, 0, 359);
+
+            push();
+
+                translate(x+(x*ix),y+(y*iy))
+
+                stroke(fg);
+                strokeWeight(5);
+                // fill(bg);
+                noFill();
+                ellipse(0, 0, 100, 100);  
+
+                push();
+                    rotate(-90);
+                    rotate(oM);
+                    strokeWeight(10);
+                    stroke(fg);
+                    line(0, 0, 100 / 2 - 10, 0);
+                pop();
+
+                push();
+                    rotate(-90);
+                    rotate(oH);
+                    strokeWeight(10);
+                    stroke(fg);
+                    line(0, 0, 100 / 2 - 10, 0);
+                pop();
+
+            pop();
+            i++
+        }
+    }
+
+    pop();
+    
 }
+
+window.addEventListener("keypress", (e) => {
+    if (e.code == "Space") {
+        if (light) {
+            bg = 0;
+            fg = 255;
+            document.body.style.backgroundColor = "#000000"
+            light = false;
+        } else {
+            bg = 255;
+            fg = 0;
+            document.body.style.backgroundColor = "#FFFFFF"
+            light = true;
+        }
+    }
+})
