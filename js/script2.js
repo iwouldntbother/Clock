@@ -125,6 +125,7 @@ const handPositions = [
 var a = 0;
 var bg = 255;
 var fg = 0;
+var numFill = "rgba(0, 0, 0, 0.5)"
 var light = true;
 
 function setup() {
@@ -169,17 +170,22 @@ function draw() {
 
     // con.innerHTML = ((h1_p > 1) ? console.log("h1") : h1_p) +"<br>"+ ((h2_p > 1) ? console.log("h2") : h2_p) +"<br>"+ ((m1_p > 1) ? console.log("m1") : m1_p) +"<br>"+ ((m2_p > 1) ? console.log("m2") : m2_p) +"<br>"+ ((s1_p > 1) ? console.log("s1") : s1_p) +"<br>"+ ((s2_p > 1) ? console.log("s2") : s2_p)
     
+    
+
     push();
 
         scale(1.5)
 
+
         push()
         translate(0, 0);
+        drawBGNo(h1);
         singleNumber(100, 100, h1, ((h1 == 1) ? 0 : (h1 + 1)), h1_p)
         pop()
 
         push()
         translate(120, 0);
+        drawBGNo(h2);
         singleNumber(100, 100, h2, (h2 + 1), h2_p)
         pop()
 
@@ -190,11 +196,13 @@ function draw() {
 
         push()
         translate(300, 0);
+        drawBGNo(m1);
         singleNumber(100, 100, m1, ((m1 == 5) ? 0 : (m1 + 1)), m1_p)
         pop()
 
         push()
         translate(420, 0);
+        drawBGNo(m2);
         singleNumber(100, 100, m2, (m2 + 1), m2_p)
         pop()
 
@@ -205,11 +213,13 @@ function draw() {
 
         push()
         translate(600, 0);
+        drawBGNo(s1);
         singleNumber(100, 100, s1, ((s1 == 5) ? 0 : (s1 + 1)), s1_p)
         pop()
 
         push()
         translate(720, 0);
+        drawBGNo(s2);
         singleNumber(100, 100, s2, (s2 + 1), s2_p)
         pop()
 
@@ -282,8 +292,16 @@ function semiColon(x, y) {
     var handvalues = eval(handPositions[10])
 
     push();
-    
+
     scale(0.3);
+
+    push();
+        noStroke()
+        fill(numFill);
+        rect(100, 200, 100, 100);
+        rect(100, 400, 100, 100);
+    pop();
+
     var i=0
     for (iy=0; iy < (handvalues.length / (handvalues.length / 6)); iy++) {
         for (ix=0; ix < (handvalues.length / 6); ix++) {
@@ -322,6 +340,7 @@ function semiColon(x, y) {
         }
     }
 
+
     pop();
     
 }
@@ -330,14 +349,92 @@ window.addEventListener("keypress", (e) => {
     if (e.code == "Space") {
         if (light) {
             bg = 0;
+            numFill = "rgba(255, 255, 255, 0.5)";
             fg = 255;
             document.body.style.backgroundColor = "#000000"
             light = false;
         } else {
             bg = 255;
             fg = 0;
+            numFill = "rgba(0, 0, 0, 0.5)";
             document.body.style.backgroundColor = "#FFFFFF"
             light = true;
         }
     }
 })
+
+function drawBGNo(number) {
+    numberShapeData = numberShapes[number]
+
+    for (i=0; i<numberShapeData.length; i++) {
+        push()
+        scale(0.3)
+        noStroke()
+        fill((numberShapeData[i][4] == "fill") ? numFill : bg);
+        // strokeWeight(10)
+        rect(numberShapeData[i][0], numberShapeData[i][1], numberShapeData[i][2], numberShapeData[i][3])
+        pop()
+    }
+    
+}
+
+const numberShapes = [
+    // 0
+    [
+        [100, 100, 300, 500, "fill"],
+        [200, 200, 100, 300, "bg"]
+    ],
+    // 1
+    [
+        [100, 100, 300, 500, "fill"],
+        [100, 200, 100, 300, "bg"],
+        [300, 100, 100, 400, "bg"]
+    ],
+    // 2
+    [
+        [100, 100, 300, 500, "fill"],
+        [100, 200, 200, 100, "bg"],
+        [200, 400, 200, 100, "bg"]
+    ],
+    // 3
+    [
+        [100, 100, 300, 500, "fill"],
+        [100, 200, 200, 100, "bg"],
+        [100, 400, 200, 100, "bg"]
+    ],
+    // 4
+    [
+        [100, 100, 300, 500, "fill"],
+        [200, 100, 100, 200, "bg"],
+        [100, 400, 200, 300, "bg"]
+    ],
+    // 5
+    [
+        [100, 100, 300, 500, "fill"],
+        [200, 200, 200, 100, "bg"],
+        [100, 400, 200, 100, "bg"]
+    ],
+    // 6
+    [
+        [100, 100, 300, 500, "fill"],
+        [200, 200, 200, 100, "bg"],
+        [200, 400, 100, 100, "bg"]
+    ],
+    // 7
+    [
+        [100, 100, 300, 500, "fill"],
+        [100, 200, 200, 400, "bg"]
+    ],
+    // 8
+    [
+        [100, 100, 300, 500, "fill"],
+        [200, 200, 100, 100, "bg"],
+        [200, 400, 100, 100, "bg"]
+    ],
+    // 9
+    [
+        [100, 100, 300, 500, "fill"],
+        [200, 200, 100, 100, "bg"],
+        [100, 400, 200, 100, "bg"]
+    ]
+]
