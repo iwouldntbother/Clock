@@ -33,6 +33,11 @@ body {
     font-size: 1vw;
 }
 
+#textContainer h2 a {
+    font-size: 0.9vw;
+    text-decoration: none;
+}
+
 #canvasContainer {
     width: 100vw;
     height: 100vh;
